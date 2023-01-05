@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gift_app/pages/container_page.dart';
+import 'package:gift_app/pages/exchange_details_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -17,6 +18,9 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: const ContainerPage(title: 'Gift app'),
+      routes: {
+        ExchangeDetailsPage.routeName: (context) => const ExchangeDetailsPage(),
+      },
     );
   }
 }

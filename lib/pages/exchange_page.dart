@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gift_app/helpers/color_helper.dart';
+import 'package:gift_app/pages/exchange_details_page.dart';
 import 'package:gift_app/services/exchange_service.dart';
 import 'package:gift_app/widgets/exchange_item_widget.dart';
 
@@ -34,7 +35,13 @@ class _ExchangePageState extends State<ExchangePage> {
                   final item = items[index];
                   return ExchangeItemWidget(
                     item: item,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        ExchangeDetailsPage.routeName,
+                        arguments: item,
+                      );
+                    },
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) =>

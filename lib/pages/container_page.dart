@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:gift_app/helpers/color_helper.dart';
 import 'package:gift_app/pages/exchange_page.dart';
 import 'package:gift_app/pages/give_page.dart';
+import 'package:gift_app/widgets/app_bar.dart';
 
 class ContainerPage extends StatefulWidget {
   const ContainerPage({Key? key, required this.title}) : super(key: key);
@@ -42,17 +43,7 @@ class _ContainerPageState extends State<ContainerPage>
       data: ThemeData.light(),
       child: Scaffold(
         extendBody: true,
-        appBar: AppBar(
-          title: Text(
-            widget.title,
-            style: const TextStyle(color: Colors.black),
-          ),
-          backgroundColor: myGrey,
-          centerTitle: true,
-          systemOverlayStyle: const SystemUiOverlayStyle(
-            systemNavigationBarColor: Colors.transparent,
-          ),
-        ),
+        appBar: getAppBar(widget.title),
         body: pages[_bottomNavIndex],
         floatingActionButton: FloatingActionButton(
           backgroundColor: myPurple,

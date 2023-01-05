@@ -20,7 +20,7 @@ class ExchangeItemWidget extends StatelessWidget {
       child: ListTile(
         leading: getLeading(),
         title: Text(item.title),
-        subtitle: item.subtitle != null ? Text(item.subtitle!) : null,
+        // subtitle: item.subtitle != null ? Text(item.subtitle!) : null,
         trailing: const Icon(Icons.chevron_right),
       ),
     );

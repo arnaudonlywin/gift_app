@@ -6,6 +6,8 @@ class ExchangeService {
     final items = [
       ExchangeItem(
         title: "Lit bébé",
+        subtitle:
+            "Le lit bébé Jimi. Un sommier réglable en hauteur et un confort adapté au sommeil des bébés, le lit Jimi de style scandinave répond aux attentes des plus exigeants. Fabrication européenne.",
         imageUrl:
             "https://www.chambrekids.com/18378-home_default/lit-pour-bebe-evolutif-evidence-70x140.jpg",
       ),

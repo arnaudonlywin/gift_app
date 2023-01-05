@@ -13,8 +13,8 @@ class _GivePageState extends State<GivePage> {
     return Center(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Text("Les dons"),
+        children: const [
+          Text("Les dons"),
         ],
       ),
     );
