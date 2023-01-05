@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gift_app/pages/home_page.dart';
+import 'package:gift_app/pages/container_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const MyHomePage(title: 'Gift app'),
+      home: const ContainerPage(title: 'Gift app'),
     );
   }
 }

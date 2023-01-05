@@ -1,21 +1,23 @@
-import 'dart:io';
-
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gift_app/helpers/color_helper.dart';
+import 'package:gift_app/pages/exchange_page.dart';
+import 'package:gift_app/pages/give_page.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+class ContainerPage extends StatefulWidget {
+  const ContainerPage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<ContainerPage> createState() => _ContainerPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
+class _ContainerPageState extends State<ContainerPage>
+    with TickerProviderStateMixin {
   final autoSizeGroup = AutoSizeGroup();
   var _bottomNavIndex = 0; //default index of a first screen
 
@@ -24,9 +26,14 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     CommunityMaterialIcons.hand_heart,
   ];
 
-  final navBottomBarTexts = [
+  final navBottomBarTexts = <String>[
     "Echanges",
     "Dons",
+  ];
+
+  final pages = const <Widget>[
+    ExchangePage(),
+    GivePage(),
   ];
 
   @override
@@ -41,11 +48,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             style: const TextStyle(color: Colors.black),
           ),
           backgroundColor: myGrey,
-          centerTitle: isCenter(),
+          centerTitle: true,
+          systemOverlayStyle: const SystemUiOverlayStyle(
+            systemNavigationBarColor: Colors.transparent,
+          ),
         ),
-        body: NavigationScreen(
-          iconList[_bottomNavIndex],
-        ),
+        body: pages[_bottomNavIndex],
         floatingActionButton: FloatingActionButton(
           backgroundColor: myPurple,
           child: Icon(
@@ -59,14 +67,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         bottomNavigationBar: getBottomBar(),
       ),
     );
-  }
-
-  bool? isCenter() {
-    if (Platform.isAndroid) {
-      print('Android');
-      return true;
-    }
-    return null;
   }
 
   ///Navigation bar
@@ -105,34 +105,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       leftCornerRadius: 32,
       rightCornerRadius: 32,
       onTap: (index) => setState(() => _bottomNavIndex = index),
-    );
-  }
-}
-
-class NavigationScreen extends StatefulWidget {
-  final IconData iconData;
-
-  const NavigationScreen(this.iconData, {super.key});
-
-  @override
-  State<NavigationScreen> createState() => _NavigationScreenState();
-}
-
-class _NavigationScreenState extends State<NavigationScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Icon(
-            widget.iconData,
-            color: myPurple,
-            size: 160,
-          ),
-          const Text("Mon texte"),
-        ],
-      ),
     );
   }
 }
