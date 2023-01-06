@@ -47,5 +47,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Accède à la galerie de votre smartphone</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Accède à la caméra de votre smartphone</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Accède au micro de votre smartphone</string>
 </dict>
 </plist>

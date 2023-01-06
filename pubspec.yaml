@@ -39,6 +39,8 @@ dependencies:
   animated_bottom_navigation_bar: ^1.1.0+1
   auto_size_text: ^3.0.0
   community_material_icon: ^5.9.55
+  image_picker: ^0.8.6
+  top_snackbar_flutter: ^3.0.0+1
 
 dev_dependencies:
   flutter_test:
