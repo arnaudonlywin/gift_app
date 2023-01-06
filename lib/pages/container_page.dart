@@ -4,6 +4,7 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gift_app/helpers/color_helper.dart';
+import 'package:gift_app/pages/add_page.dart';
 import 'package:gift_app/pages/exchange_page.dart';
 import 'package:gift_app/pages/give_page.dart';
 import 'package:gift_app/widgets/app_bar.dart';
@@ -52,7 +53,12 @@ class _ContainerPageState extends State<ContainerPage>
             size: 50,
             color: myGrey,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const AddPage()),
+            );
+          },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: getBottomBar(),
