@@ -1,11 +1,15 @@
-class ExchangeItem {
-  String title;
-  String? subtitle;
-  String? imageUrl;
+import 'dart:io';
+
+import 'package:gift_app/models/item.dart';
+
+class ExchangeItem extends Item {
+  String? contreparties;
 
   ExchangeItem({
-    required this.title,
-    this.subtitle,
-    this.imageUrl,
+    required super.title,
+    super.subtitle,
+    super.imageUrl,
+    super.fileImage,
+    this.contreparties,
   });
 }

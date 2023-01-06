@@ -44,6 +44,13 @@ class _ImageWidgetState extends State<ImageWidget> {
     fontSize: 17,
   );
 
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: (file == null) ? _withoutImage() : _withImage(),
+    );
+  }
+
   Future _getImageFromCamera() async {
     try {
       final image = await ImagePicker().pickImage(
@@ -243,13 +250,9 @@ class _ImageWidgetState extends State<ImageWidget> {
   _deleteImage() {
     setState(() {
       file = null;
+      if (widget.onSetFile != null) {
+        widget.onSetFile!(file);
+      }
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: (file == null) ? _withoutImage() : _withImage(),
-    );
   }
 }

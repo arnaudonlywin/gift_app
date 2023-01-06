@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gift_app/helpers/alert_dialog.dart';
 import 'package:gift_app/helpers/color_helper.dart';
+import 'package:gift_app/models/exchange_item.dart';
+import 'package:gift_app/models/item.dart';
 import 'package:gift_app/widgets/app_bar.dart';
 import 'package:gift_app/widgets/image_widget.dart';
 
@@ -16,7 +20,9 @@ class _AddPageState extends State<AddPage> {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _subtitleController = TextEditingController();
+  File? _fileImage;
   int _slidingIndex = 0;
+  final _contrepartieController = TextEditingController();
 
   @override
   void dispose() {
@@ -31,6 +37,7 @@ class _AddPageState extends State<AddPage> {
       extendBody: true,
       appBar: getAppBar("Ajout"),
       body: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
         child: Form(
           key: _formKey,
           child: Padding(
@@ -56,17 +63,10 @@ class _AddPageState extends State<AddPage> {
                   maxLines: 5,
                   textCapitalization: TextCapitalization.sentences,
                   keyboardType: TextInputType.multiline,
-                  onChanged: (newTitle) {},
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: _subtitleController,
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Merci de saisir un sous-titre';
-                    }
-                    return null;
-                  },
                   decoration: const InputDecoration(
                     labelText: 'Sous-titre',
                     labelStyle: TextStyle(
@@ -77,36 +77,33 @@ class _AddPageState extends State<AddPage> {
                   maxLines: 5,
                   textCapitalization: TextCapitalization.sentences,
                   keyboardType: TextInputType.multiline,
-                  onChanged: (newTitle) {},
                 ),
                 const SizedBox(height: 20),
-                const ImageWidget(
+                ImageWidget(
                   backgroundColor: Colors.purple,
                   text: "Photo",
+                  onSetFile: (file) {
+                    _fileImage = file;
+                  },
                 ),
                 const SizedBox(height: 20),
                 getSlidingControl(),
                 const SizedBox(height: 20),
-                TextFormField(
-                  controller: _subtitleController,
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Merci de saisir une contrepartie';
-                    }
-                    return null;
-                  },
-                  decoration: const InputDecoration(
-                    labelText: 'Contreparties *',
-                    labelStyle: TextStyle(
-                      color: Colors.black,
+                if (_slidingIndex == 0)
+                  TextFormField(
+                    controller: _contrepartieController,
+                    decoration: const InputDecoration(
+                      labelText: 'Contreparties',
+                      labelStyle: TextStyle(
+                        color: Colors.black,
+                      ),
                     ),
+                    minLines: 1,
+                    maxLines: 5,
+                    textCapitalization: TextCapitalization.sentences,
+                    keyboardType: TextInputType.multiline,
                   ),
-                  minLines: 1,
-                  maxLines: 5,
-                  textCapitalization: TextCapitalization.sentences,
-                  keyboardType: TextInputType.multiline,
-                  onChanged: (newTitle) {},
-                ),
+                const SizedBox(height: 100),
               ],
             ),
           ),
@@ -153,7 +150,7 @@ class _AddPageState extends State<AddPage> {
         child: Align(
           alignment: Alignment.topCenter,
           child: ElevatedButton(
-            onPressed: _addConfirmation,
+            onPressed: _onAskConfirmation,
             style: ButtonStyle(
               backgroundColor: MaterialStatePropertyAll<Color>(myPurple),
             ),
@@ -170,15 +167,31 @@ class _AddPageState extends State<AddPage> {
   }
 
   ///Demande confirmation avant l'ajout
-  void _addConfirmation() {
+  void _onAskConfirmation() {
     MyAlertDialog(
       context: context,
       titleText: "Êtes-vous sûr de vouloir ajouter cet article ?",
       choiceOneText: "Annuler",
       choiceTwoText: "Confirmer",
-      choiceTwoCallback: () {
-        //TODO Ajouter l'article
-      },
+      choiceTwoCallback: _onConfirm,
     ).show();
+  }
+
+  ///Ajoute l'article
+  void _onConfirm() {
+    if (_formKey.currentState!.validate()) {
+      Item item = (_slidingIndex == 0)
+          ? ExchangeItem(
+              title: _titleController.text,
+              subtitle: _subtitleController.text,
+              fileImage: _fileImage,
+              contreparties: _contrepartieController.text,
+            )
+          : Item(
+              title: _titleController.text,
+              subtitle: _subtitleController.text,
+              fileImage: _fileImage,
+            );
+    }
   }
 }
