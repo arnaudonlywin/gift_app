@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.gift_app">
+    package="co.simplon.ach.gift_app">
    <application
         android:label="gift_app"
         android:name="${applicationName}"

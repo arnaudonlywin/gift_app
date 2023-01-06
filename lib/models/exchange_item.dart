@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:gift_app/models/item.dart';
 
 class ExchangeItem extends Item {

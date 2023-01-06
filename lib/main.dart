@@ -2,8 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:gift_app/pages/container_page.dart';
 import 'package:gift_app/pages/exchange_details_page.dart';
 import 'package:gift_app/theme.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() => runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
