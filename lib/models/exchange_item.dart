@@ -4,6 +4,7 @@ class ExchangeItem extends Item {
   String? contreparties;
 
   ExchangeItem({
+    super.id,
     required super.title,
     super.subtitle,
     super.imageUrl,

@@ -75,7 +75,7 @@ Future<T?> _showCupertinoBottomSheet<T>(
   CancelAction? cancelAction,
 ) {
   final defaultTextStyle =
-      Theme.of(context).textTheme.headline6 ?? const TextStyle(fontSize: 20);
+      Theme.of(context).textTheme.titleLarge ?? const TextStyle(fontSize: 20);
   return showCupertinoModalPopup(
     context: context,
     builder: (BuildContext coxt) {
@@ -141,7 +141,7 @@ Future<T?> _showMaterialBottomSheet<T>(
   Color? bottomSheetColor,
 ) {
   final defaultTextStyle =
-      Theme.of(context).textTheme.headline6 ?? const TextStyle(fontSize: 20);
+      Theme.of(context).textTheme.titleLarge ?? const TextStyle(fontSize: 20);
   final BottomSheetThemeData sheetTheme = Theme.of(context).bottomSheetTheme;
   return showModalBottomSheet<T>(
     context: context,
