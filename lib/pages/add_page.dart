@@ -206,7 +206,7 @@ class _AddPageState extends State<AddPage> {
             showTopSnackBar(
               Overlay.of(context),
               CustomSnackBar.error(
-                message: error,
+                message: error.toString(),
               ),
             );
           }
