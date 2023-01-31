@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:gift_app/helpers/alert_dialog.dart';
 import 'package:gift_app/helpers/color_helper.dart';
 import 'package:gift_app/models/exchange_item.dart';
-import 'package:gift_app/models/item.dart';
+import 'package:gift_app/services/exchange_service.dart';
 import 'package:gift_app/widgets/app_bar.dart';
 import 'package:gift_app/widgets/image_widget.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({super.key});
@@ -180,18 +182,36 @@ class _AddPageState extends State<AddPage> {
   ///Ajoute l'article
   void _onConfirm() {
     if (_formKey.currentState!.validate()) {
-      Item item = (_slidingIndex == 0)
-          ? ExchangeItem(
-              title: _titleController.text,
-              subtitle: _subtitleController.text,
-              fileImage: _fileImage,
-              contreparties: _contrepartieController.text,
-            )
-          : Item(
-              title: _titleController.text,
-              subtitle: _subtitleController.text,
-              fileImage: _fileImage,
+      if (_slidingIndex == 0) {
+        final item = ExchangeItem(
+          title: _titleController.text,
+          subtitle: _subtitleController.text,
+          fileImage: _fileImage,
+          contreparties: _contrepartieController.text,
+        );
+        ExchangeService.add(item).then(
+          (newItemId) {
+            if (context.mounted) {
+              showTopSnackBar(
+                Overlay.of(context),
+                const CustomSnackBar.success(
+                  message: "Objet bien ajouté",
+                ),
+              );
+              Navigator.pop(context);
+            }
+          },
+        ).catchError((error) {
+          if (context.mounted) {
+            showTopSnackBar(
+              Overlay.of(context),
+              CustomSnackBar.error(
+                message: error,
+              ),
             );
+          }
+        });
+      }
     }
   }
 }

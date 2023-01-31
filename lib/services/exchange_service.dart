@@ -21,4 +21,16 @@ class ExchangeService {
         .collection("exchange_items")
         .orderBy("title");
   }
+
+  ///Ajoute un élément à échanger
+  static Future<String> add(ExchangeItem item) async {
+    final docRef =
+        await FirebaseFirestore.instance.collection("exchange_items").add(
+      {
+        'title': item.title,
+        'subtitle': item.subtitle,
+      },
+    );
+    return docRef.id;
+  }
 }
