@@ -17,13 +17,37 @@ class _MapPageState extends State<MapPage> with AutomaticKeepAliveClientMixin {
       Completer<GoogleMapController>();
 
   Future<Position> _getUserCurrentLocation() async {
-    await Geolocator.requestPermission()
-        .then((value) {})
-        .onError((error, stackTrace) async {
-      await Geolocator.requestPermission();
-      debugPrint("ERROR: $error");
-    });
-    return await Geolocator.getCurrentPosition();
+    const defaultPosition = Position(
+      latitude: 45.764043,
+      longitude: 4.835659,
+      timestamp: null,
+      accuracy: 0.0,
+      altitude: 0.0,
+      heading: 0.0,
+      speed: 0.0,
+      speedAccuracy: 0.0,
+    );
+    try {
+      final checkPermission = await Geolocator.checkPermission();
+      switch (checkPermission) {
+        case LocationPermission.denied:
+        case LocationPermission.unableToDetermine:
+          //On demande la permission
+          await Geolocator.requestPermission();
+          //Et on se rappelle soit même pour refaire les contrôle
+          return _getUserCurrentLocation();
+        case LocationPermission.deniedForever:
+          //On ne peut pas redemander la permission donc on retourne
+          //les coordonnés GPS de Lyon
+          return defaultPosition;
+        case LocationPermission.whileInUse:
+        case LocationPermission.always:
+          return await Geolocator.getCurrentPosition();
+      }
+    } catch (error) {
+      //Si une erreur intervient, on retourne la position de Lyon
+      return defaultPosition;
+    }
   }
 
   @override
@@ -47,7 +71,7 @@ class _MapPageState extends State<MapPage> with AutomaticKeepAliveClientMixin {
             zoom: 14,
           );
           return GoogleMap(
-            mapType: MapType.hybrid,
+            mapType: MapType.normal,
             initialCameraPosition: cameraPosition,
             onMapCreated: (GoogleMapController controller) {
               _controller.complete(controller);
