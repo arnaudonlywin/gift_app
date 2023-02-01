@@ -11,6 +11,7 @@ import 'package:gift_app/widgets/app_bar.dart';
 class ContainerPage extends StatefulWidget {
   const ContainerPage({Key? key, required this.title}) : super(key: key);
 
+  static const routeName = '/homePage';
   final String title;
 
   @override

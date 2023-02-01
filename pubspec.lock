@@ -146,7 +146,7 @@ packages:
     source: hosted
     version: "1.3.1"
   firebase_auth:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: firebase_auth
       sha256: ac3c7c8022c1032c1dc7d16e62db1d6f1e2fbdc8c1039ee706d8deb45eca3a42
@@ -257,6 +257,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.19"
+  firebase_ui_auth:
+    dependency: "direct main"
+    description:
+      name: firebase_ui_auth
+      sha256: fe256d12c9dfb556cfa2da67f89747bdb7b14056bba2a760136ef19fdfe1e847
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.9"
+  firebase_ui_localizations:
+    dependency: transitive
+    description:
+      name: firebase_ui_localizations
+      sha256: "5aa3a9751337856d4a35016922c8109770ccc816cb6a9d298cea30bcd44551cb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
+  firebase_ui_oauth:
+    dependency: transitive
+    description:
+      name: firebase_ui_oauth
+      sha256: "6a2bf8383820bed80fed0f8b94de15b7e9a3fbbf02b601bcdee525576eec54d6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.9"
   flutter:
     dependency: "direct main"
     description: flutter

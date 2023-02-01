@@ -25,7 +25,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -62,21 +65,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDD2l8h0a9U_6Pt0qweZ6NNot-p1IFpgf8',
-    appId: '1:90476709612:ios:0ac1553409ec3b44ef07c9',
+    appId: '1:90476709612:ios:d45ff8669f7d76fdef07c9',
     messagingSenderId: '90476709612',
     projectId: 'simplon-alt3-cda',
     storageBucket: 'simplon-alt3-cda.appspot.com',
-    iosClientId: '90476709612-8502abnecn5q84sb5ic0l8inuv9th7nn.apps.googleusercontent.com',
-    iosBundleId: 'com.example.giftApp',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDD2l8h0a9U_6Pt0qweZ6NNot-p1IFpgf8',
-    appId: '1:90476709612:ios:0ac1553409ec3b44ef07c9',
-    messagingSenderId: '90476709612',
-    projectId: 'simplon-alt3-cda',
-    storageBucket: 'simplon-alt3-cda.appspot.com',
-    iosClientId: '90476709612-8502abnecn5q84sb5ic0l8inuv9th7nn.apps.googleusercontent.com',
-    iosBundleId: 'com.example.giftApp',
+    iosClientId:
+        '90476709612-8502abnecn5q84sb5ic0l8inuv9th7nn.apps.googleusercontent.com',
+    iosBundleId: 'co.simplon.ach.giftapp',
   );
 }
