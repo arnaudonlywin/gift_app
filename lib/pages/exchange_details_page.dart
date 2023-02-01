@@ -35,6 +35,21 @@ class _ExchangeDetailsPageState extends State<ExchangeDetailsPage> {
                       padding: const EdgeInsets.all(10.0),
                       child: Text(item.subtitle!),
                     ),
+                  if (item.contreparties != null)
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        children: [
+                          const Text(
+                            "L'utilisateur accepte d'échanger cet objet contre :",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(item.contreparties!),
+                        ],
+                      ),
+                    ),
                 ],
               ),
             ),

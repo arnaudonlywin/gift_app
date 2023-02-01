@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gift_app/helpers/alert_dialog.dart';
 import 'package:gift_app/helpers/color_helper.dart';
@@ -23,7 +22,6 @@ class _AddPageState extends State<AddPage> {
   final _titleController = TextEditingController();
   final _subtitleController = TextEditingController();
   File? _fileImage;
-  int _slidingIndex = 0;
   final _contrepartieController = TextEditingController();
 
   @override
@@ -89,22 +87,19 @@ class _AddPageState extends State<AddPage> {
                   },
                 ),
                 const SizedBox(height: 20),
-                getSlidingControl(),
-                const SizedBox(height: 20),
-                if (_slidingIndex == 0)
-                  TextFormField(
-                    controller: _contrepartieController,
-                    decoration: const InputDecoration(
-                      labelText: 'Contreparties',
-                      labelStyle: TextStyle(
-                        color: Colors.black,
-                      ),
+                TextFormField(
+                  controller: _contrepartieController,
+                  decoration: const InputDecoration(
+                    labelText: 'Contreparties',
+                    labelStyle: TextStyle(
+                      color: Colors.black,
                     ),
-                    minLines: 1,
-                    maxLines: 5,
-                    textCapitalization: TextCapitalization.sentences,
-                    keyboardType: TextInputType.multiline,
                   ),
+                  minLines: 1,
+                  maxLines: 5,
+                  textCapitalization: TextCapitalization.sentences,
+                  keyboardType: TextInputType.multiline,
+                ),
                 const SizedBox(height: 100),
               ],
             ),
@@ -112,33 +107,6 @@ class _AddPageState extends State<AddPage> {
         ),
       ),
       bottomSheet: getBottomSheet(),
-    );
-  }
-
-  ///Sliding control pour dire si c'est un échange ou un don
-  Widget getSlidingControl() {
-    return Center(
-      child: CupertinoSlidingSegmentedControl(
-        thumbColor: myPurple,
-        children: {
-          0: Text(
-            "A échanger",
-            style: TextStyle(
-                color: _slidingIndex == 0 ? Colors.white : Colors.black),
-          ),
-          1: Text(
-            "A donner",
-            style: TextStyle(
-                color: _slidingIndex == 1 ? Colors.white : Colors.black),
-          ),
-        },
-        groupValue: _slidingIndex,
-        onValueChanged: (int? newSlidingIndex) {
-          setState(() {
-            _slidingIndex = newSlidingIndex!;
-          });
-        },
-      ),
     );
   }
 
@@ -182,36 +150,34 @@ class _AddPageState extends State<AddPage> {
   ///Ajoute l'article
   void _onConfirm() {
     if (_formKey.currentState!.validate()) {
-      if (_slidingIndex == 0) {
-        final item = ExchangeItem(
-          title: _titleController.text,
-          subtitle: _subtitleController.text,
-          fileImage: _fileImage,
-          contreparties: _contrepartieController.text,
-        );
-        ExchangeService.add(item).then(
-          (newItemId) {
-            if (context.mounted) {
-              showTopSnackBar(
-                Overlay.of(context),
-                const CustomSnackBar.success(
-                  message: "Objet bien ajouté",
-                ),
-              );
-              Navigator.pop(context);
-            }
-          },
-        ).catchError((error) {
+      final item = ExchangeItem(
+        title: _titleController.text,
+        subtitle: _subtitleController.text,
+        fileImage: _fileImage,
+        contreparties: _contrepartieController.text,
+      );
+      ExchangeService.add(item).then(
+        (newItemId) {
           if (context.mounted) {
             showTopSnackBar(
               Overlay.of(context),
-              CustomSnackBar.error(
-                message: error.toString(),
+              const CustomSnackBar.success(
+                message: "Objet bien ajouté",
               ),
             );
+            Navigator.pop(context);
           }
-        });
-      }
+        },
+      ).catchError((error) {
+        if (context.mounted) {
+          showTopSnackBar(
+            Overlay.of(context),
+            CustomSnackBar.error(
+              message: error.toString(),
+            ),
+          );
+        }
+      });
     }
   }
 }

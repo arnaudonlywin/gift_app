@@ -1,11 +1,11 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:gift_app/helpers/color_helper.dart';
 import 'package:gift_app/pages/add_page.dart';
 import 'package:gift_app/pages/exchange_page.dart';
-import 'package:gift_app/pages/give_page.dart';
+import 'package:gift_app/pages/map_page.dart';
+import 'package:gift_app/pages/profile_page.dart';
 import 'package:gift_app/widgets/app_bar.dart';
 
 class ContainerPage extends StatefulWidget {
@@ -25,17 +25,20 @@ class _ContainerPageState extends State<ContainerPage>
 
   final iconList = <IconData>[
     Icons.card_giftcard,
-    CommunityMaterialIcons.hand_heart,
+    Icons.person,
+    Icons.map_outlined,
   ];
 
   final navBottomBarTexts = <String>[
     "Echanges",
-    "Dons",
+    "Compte",
+    "Carte",
   ];
 
   final pages = const <Widget>[
     ExchangePage(),
-    GivePage(),
+    ProfilePage(),
+    MapPage(),
   ];
 
   @override
@@ -60,7 +63,7 @@ class _ContainerPageState extends State<ContainerPage>
             );
           },
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         bottomNavigationBar: getBottomBar(),
       ),
     );
@@ -98,9 +101,8 @@ class _ContainerPageState extends State<ContainerPage>
       activeIndex: _bottomNavIndex,
       splashColor: myPurple,
       splashSpeedInMilliseconds: 300,
-      gapLocation: GapLocation.center,
+      gapLocation: GapLocation.end,
       leftCornerRadius: 32,
-      rightCornerRadius: 32,
       onTap: (index) => setState(() => _bottomNavIndex = index),
     );
   }

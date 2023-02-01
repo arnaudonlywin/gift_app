@@ -13,6 +13,7 @@ class ExchangeService {
       title: exchangeItemData['title'],
       subtitle: exchangeItemData['subtitle'],
       imageUrl: exchangeItemData['imageUrl'],
+      contreparties: exchangeItemData['contreparties'],
     );
   }
 
@@ -31,6 +32,7 @@ class ExchangeService {
       {
         'title': item.title,
         'subtitle': item.subtitle,
+        'contreparties': item.contreparties,
       },
     );
     final itemId = docRef.id;
