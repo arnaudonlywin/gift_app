@@ -53,5 +53,9 @@
 	<string>Accède à la caméra de votre smartphone</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Accède au micro de votre smartphone</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+    <string>Accède à votre emplacement géographique afin de vous proposer une meilleur expérience utilisateur</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Accède à votre emplacement géographique afin de vous proposer une meilleur expérience utilisateur</string>
 </dict>
 </plist>

@@ -1,5 +1,9 @@
-import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:gift_app/helpers/color_helper.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -9,34 +13,53 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> with AutomaticKeepAliveClientMixin {
-  late MapController controller;
+  final Completer<GoogleMapController> _controller =
+      Completer<GoogleMapController>();
+
+  Future<Position> _getUserCurrentLocation() async {
+    await Geolocator.requestPermission()
+        .then((value) {})
+        .onError((error, stackTrace) async {
+      await Geolocator.requestPermission();
+      debugPrint("ERROR: $error");
+    });
+    return await Geolocator.getCurrentPosition();
+  }
 
   @override
   bool get wantKeepAlive => true;
 
   @override
-  void initState() {
-    super.initState();
-    controller = MapController(
-      initMapWithUserPosition: true,
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
     super.build(context);
-    return OSMFlutter(
-      controller: controller,
-      markerOption: MarkerOption(
-        defaultMarker: const MarkerIcon(
-          icon: Icon(
-            Icons.person_pin_circle,
-            color: Colors.blue,
-            size: 56,
+    return FutureBuilder(
+      future: _getUserCurrentLocation(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done &&
+            !snapshot.hasError &&
+            snapshot.hasData) {
+          final currentPosition = snapshot.data!;
+          CameraPosition cameraPosition = CameraPosition(
+            target: LatLng(
+              currentPosition.latitude,
+              currentPosition.longitude,
+            ),
+            zoom: 14,
+          );
+          return GoogleMap(
+            mapType: MapType.hybrid,
+            initialCameraPosition: cameraPosition,
+            onMapCreated: (GoogleMapController controller) {
+              _controller.complete(controller);
+            },
+          );
+        }
+        return Center(
+          child: CircularProgressIndicator(
+            color: myPurple,
           ),
-        ),
-      ),
-      trackMyPosition: false,
+        );
+      },
     );
   }
 }
